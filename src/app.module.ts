@@ -9,6 +9,9 @@ import { UserRoles } from './roles/user.roles.model';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt.auth.guard';
+import { PostsModule } from './posts/posts.module';
+import * as path from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   controllers: [],
@@ -21,6 +24,9 @@ import { JwtAuthGuard } from './auth/jwt.auth.guard';
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
@@ -35,6 +41,7 @@ import { JwtAuthGuard } from './auth/jwt.auth.guard';
     UsersModule,
     RolesModule,
     AuthModule,
+    PostsModule,
   ],
 })
 export class AppModule {}
