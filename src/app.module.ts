@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AssignmentModule } from './assignment/assignment.module';
 
 @Module({
   controllers: [],
@@ -40,6 +41,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     RolesModule,
     AuthModule,
     PostsModule,
+    AssignmentModule,
   ],
 })
 export class AppModule {}
