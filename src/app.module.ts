@@ -10,7 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { AssignmentModule } from './assignment/assignment.module';
+import { TaskModule } from './assignment/task.module';
 
 @Module({
   controllers: [],
@@ -41,7 +41,7 @@ import { AssignmentModule } from './assignment/assignment.module';
     RolesModule,
     AuthModule,
     PostsModule,
-    AssignmentModule,
+    TaskModule,
   ],
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/createUser.dto';
 import { RolesService } from '../roles/roles.service';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BanUserDto } from './dto/ban-user.dto';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -42,6 +43,20 @@ export class UsersService {
       });
     } catch (e) {
       // throw new HttpException({});
+    }
+  }
+  async findByIdArr(userIdArr: number[]) {
+    try {
+      return await this.userRepository.findAll({
+        where: {
+          id: {
+            [Op.in]: userIdArr,
+          },
+        },
+        attributes: ['id'],
+      });
+    } catch (e) {
+      throw new HttpException('users not found', HttpStatus.NOT_FOUND);
     }
   }
   async getByEmail(email: string) {
