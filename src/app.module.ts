@@ -7,8 +7,6 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/role.model';
 import { UserRoles } from './roles/user.roles.model';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './auth/jwt.auth.guard';
 import { PostsModule } from './posts/posts.module';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -16,10 +14,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 @Module({
   controllers: [],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard,
+    // },
   ],
   imports: [
     ConfigModule.forRoot({

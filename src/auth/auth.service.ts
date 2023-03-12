@@ -9,7 +9,6 @@ import { CreateUserDto } from '../users/dto/createUser.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { User } from '../users/user.model';
-import e from 'express';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +22,7 @@ export class AuthService {
       const user = await this.validateUser(dto);
       return this.generateToken(user);
     } catch (e) {
-      throw new UnauthorizedException({ message: 'Some error' });
+      throw e;
     }
   }
 
@@ -50,18 +49,12 @@ export class AuthService {
     };
   }
   private async validateUser(dto: CreateUserDto) {
-    try {
-      const user = await this.userService.getByEmail(dto.email);
-      const passwordEquals = await bcrypt.compare(dto.email, user.email);
-      if (passwordEquals) {
-        return user;
-      } else {
-        throw new UnauthorizedException({ message: 'пользователь не найден' });
-      }
-    } catch (e) {
-      throw new UnauthorizedException({
-        message: 'пользователь не зарегистрирован',
-      });
+    const user = await this.userService.getByEmail(dto.email);
+    const passwordEquals = await bcrypt.compare(dto.password, user.password);
+    if (passwordEquals) {
+      return user;
+    } else {
+      throw new UnauthorizedException({ message: 'пользователь не найден' });
     }
   }
 }
