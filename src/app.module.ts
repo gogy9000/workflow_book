@@ -11,6 +11,8 @@ import { PostsModule } from './posts/posts.module';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TaskModule } from './assignment/task.module';
+import { TaskUser } from './assignment/task.user.model';
+import { Task } from './assignment/task.model';
 
 @Module({
   controllers: [],
@@ -34,13 +36,13 @@ import { TaskModule } from './assignment/task.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles],
+      models: [User, Role, UserRoles, TaskUser, Task],
       autoLoadModels: true,
     }),
     UsersModule,
     RolesModule,
     AuthModule,
-    PostsModule,
+    // PostsModule,
     TaskModule,
   ],
 })

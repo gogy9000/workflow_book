@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Role } from './role.model';
 import { CreateRoleDto } from './dto/createRole.dto';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class RolesService {
@@ -20,6 +21,20 @@ export class RolesService {
       return await this.roleRepository.findOne({ where: { value } });
     } catch (e) {
       throw new HttpException('role not found', HttpStatus.NOT_FOUND);
+    }
+  }
+  async findByIdArr(roleIdArr?: number[]) {
+    try {
+      return await this.roleRepository.findAll({
+        where: {
+          id: {
+            [Op.in]: roleIdArr ? roleIdArr : [],
+          },
+        },
+        attributes: ['id'],
+      });
+    } catch (e) {
+      throw new HttpException('roles not found', HttpStatus.NOT_FOUND);
     }
   }
 }

@@ -11,22 +11,18 @@ import { ValidationException } from '../exeption/validationException';
 @Injectable()
 export class ValidationPipe implements PipeTransform {
   async transform(value: any, { metatype }: ArgumentMetadata): Promise<any> {
-    try {
-      if (!metatype || !this.toValidate(metatype)) {
-        return value;
-      }
-      const object = plainToInstance(metatype, value);
-      const errors = await validate(object);
-      if (errors.length) {
-        const messages = errors.map((err) => {
-          return `${err.property}-${Object.values(err.constraints).join('. ')}`;
-        });
-        throw new ValidationException(messages);
-      }
+    if (!metatype || !this.toValidate(metatype)) {
       return value;
-    } catch (e) {
-      throw new BadRequestException({ error: 'validation pipe is broken' });
     }
+    const object = plainToInstance(metatype, value);
+    const errors = await validate(object);
+    if (errors.length) {
+      const messages = errors.map((err) => {
+        return `${err.property}-${Object.values(err.constraints).join('. ')}`;
+      });
+      throw new ValidationException(messages);
+    }
+    return value;
   }
   // eslint-disable-next-line @typescript-eslint/ban-types
   private toValidate(metatype: Function): boolean {
