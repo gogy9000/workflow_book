@@ -10,6 +10,8 @@ import { Role } from '../roles/role.model';
 import { UserRoles } from '../roles/user.roles.model';
 import { Task } from '../assignment/task.model';
 import { TaskUser } from '../assignment/task.user.model';
+import { ReportsUsers } from '../reports/reports.users.model';
+import { Report } from '../reports/report.model';
 
 interface UserCreationAttrs {
   email: string;
@@ -64,4 +66,7 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @BelongsToMany(() => Task, () => TaskUser)
   tasks: Task[];
+
+  @BelongsToMany(() => Report, () => ReportsUsers)
+  reports: Report[];
 }

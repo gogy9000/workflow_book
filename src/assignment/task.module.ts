@@ -10,6 +10,7 @@ import { UsersModule } from '../users/users.module';
 import { UsersService } from '../users/users.service';
 import { Role } from '../roles/role.model';
 import { UserRoles } from '../roles/user.roles.model';
+import { Report } from '../reports/report.model';
 
 @Module({
   controllers: [TaskController],
@@ -17,8 +18,7 @@ import { UserRoles } from '../roles/user.roles.model';
   imports: [
     forwardRef(() => UsersModule),
     forwardRef(() => AuthModule),
-    // UsersModule,
-    SequelizeModule.forFeature([User, Task, TaskUser, Role, UserRoles]),
+    SequelizeModule.forFeature([User, Task, TaskUser, Role, UserRoles, Report]),
   ],
   exports: [TaskService],
 })

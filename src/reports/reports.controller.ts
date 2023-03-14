@@ -1,4 +1,57 @@
-import { Controller } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { ReportsService } from './reports.service';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Task } from '../assignment/task.model';
+import { Roles } from '../auth/role.auth.decorator';
+import { RoleGuard } from '../auth/role.guard';
+import { Report } from './report.model';
+import { CreateReportDto } from './dto/create.report.dto';
 
+@ApiTags('reports')
+@ApiBearerAuth('JWT-auth')
 @Controller('reports')
-export class ReportsController {}
+export class ReportsController {
+  constructor(private readonly reportsService: ReportsService) {}
+
+  @ApiOperation({ summary: 'показать все отчеты' })
+  @ApiResponse({ status: 200, type: [Report] })
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
+  @Get()
+  getAll() {
+    return this.reportsService.getAll();
+  }
+
+  @ApiOperation({ summary: 'создать отчет' })
+  @ApiResponse({ status: 200, type: Report })
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
+  @Post()
+  create(@Body() dto: CreateReportDto) {
+    return this.reportsService.create(dto);
+  }
+
+  @ApiOperation({ summary: 'обновить отчет' })
+  @ApiResponse({ status: 200, type: Report })
+  @ApiParam({ name: 'id', type: Number, required: true })
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
+  @Put('/:id')
+  update(@Param('id') id: number, @Body() dto: CreateReportDto) {
+    return this.reportsService.update(id, dto);
+  }
+}

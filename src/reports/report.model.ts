@@ -4,22 +4,22 @@ import {
   Column,
   DataType,
   ForeignKey,
-  HasOne,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { User } from '../users/user.model';
-import { TaskUser } from './task.user.model';
-import { Report } from '../reports/report.model';
+import { ReportsUsers } from './reports.users.model';
+import { Task } from '../assignment/task.model';
 
-interface TaskCreation {
+interface ReportCreation {
   title: string;
   location: string;
   description: string;
   userList: User[];
 }
-@Table({ tableName: 'tasks' })
-export class Task extends Model<Task, TaskCreation> {
+
+@Table({ tableName: 'report' })
+export class Report extends Model<Report, ReportCreation> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -49,9 +49,13 @@ export class Task extends Model<Task, TaskCreation> {
   })
   description: string;
 
-  @BelongsToMany(() => User, () => TaskUser)
+  @BelongsToMany(() => User, () => ReportsUsers)
   userList: User[];
 
-  @HasOne(() => Report)
-  report: Report;
+  @BelongsTo(() => Task)
+  task: Task;
+
+  @ForeignKey(() => Task)
+  @Column({ type: DataType.INTEGER, unique: true, allowNull: true })
+  taskId: number;
 }

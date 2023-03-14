@@ -14,6 +14,8 @@ import { TaskModule } from './assignment/task.module';
 import { TaskUser } from './assignment/task.user.model';
 import { Task } from './assignment/task.model';
 import { ReportsModule } from './reports/reports.module';
+import { Report } from './reports/report.model';
+import { ReportsUsers } from './reports/reports.users.model';
 
 @Module({
   controllers: [],
@@ -37,7 +39,7 @@ import { ReportsModule } from './reports/reports.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles, TaskUser, Task],
+      models: [User, Role, UserRoles, TaskUser, Task, Report, ReportsUsers],
       autoLoadModels: true,
     }),
     UsersModule,
