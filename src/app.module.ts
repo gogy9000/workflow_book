@@ -13,6 +13,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TaskModule } from './assignment/task.module';
 import { TaskUser } from './assignment/task.user.model';
 import { Task } from './assignment/task.model';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   controllers: [],
@@ -44,6 +45,7 @@ import { Task } from './assignment/task.model';
     AuthModule,
     // PostsModule,
     TaskModule,
+    ReportsModule,
   ],
 })
 export class AppModule {}

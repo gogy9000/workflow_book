@@ -32,7 +32,6 @@ export class TaskService {
   async create({ userList, ...rest }: CreateTaskDto) {
     try {
       const users = await this.userService.findByIdArr(userList);
-
       const task = await this.taskRepository.create({
         ...rest,
       });
@@ -41,6 +40,20 @@ export class TaskService {
     } catch (e) {
       throw new HttpException("task can't created", HttpStatus.BAD_REQUEST);
     }
+  }
+  async update(id: number, { userList, ...rest }: CreateTaskDto) {
+    try {
+      const task = await this.taskRepository.findByPk(id, {
+        include: { all: true },
+      });
+      if (userList) {
+        const users = await this.userService.findByIdArr(userList);
+        await task.$set('userList', users);
+      }
+      await task.set(rest);
+      await task.save();
+      return await task.reload({ include: { all: true } });
+    } catch (e) {}
   }
 
   async findByIdArr(taskIdArr?: number[]) {

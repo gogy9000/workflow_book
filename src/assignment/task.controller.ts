@@ -1,9 +1,18 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create.task.dto';
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiParam,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -32,5 +41,15 @@ export class TaskController {
   @Post()
   create(@Body() dto: CreateTaskDto) {
     return this.taskService.create(dto);
+  }
+
+  @ApiOperation({ summary: 'обновить задание' })
+  @ApiResponse({ status: 200, type: Task })
+  @ApiParam({ name: 'id', type: Number, required: true })
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
+  @Put('/:id')
+  update(@Param('id') id: number, @Body() dto: CreateTaskDto) {
+    return this.taskService.update(id, dto);
   }
 }

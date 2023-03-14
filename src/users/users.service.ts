@@ -43,7 +43,6 @@ export class UsersService {
         user.roles = [adminRole];
         return user;
       }
-      //меняет на ходу поле в таблице
       await user.$set('roles', [role.id]);
       user.roles = [role];
       return user;
@@ -54,7 +53,6 @@ export class UsersService {
   async getAll() {
     try {
       return await this.userRepository.findAll({
-        //раскукоживает все ссылки в сущности
         include: { all: true },
       });
     } catch (e) {
