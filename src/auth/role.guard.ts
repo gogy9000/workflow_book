@@ -40,7 +40,7 @@ export class RoleGuard implements CanActivate {
       );
       return isRequireUser;
     } catch (e) {
-      throw new HttpException('no pass', HttpStatus.FORBIDDEN);
+      throw new UnauthorizedException({ message: e.message });
     }
   }
 }

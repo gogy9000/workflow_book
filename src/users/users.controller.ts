@@ -59,16 +59,26 @@ export class UsersController {
 
   @ApiOperation({ summary: 'вывести всех юзеров' })
   @ApiResponse({ status: 200, type: [User] })
-  @Roles('ADMIN')
+  @Roles('USER')
   @UseGuards(RoleGuard)
   @Get()
   getAll() {
     return this.userService.getAll();
   }
 
+  @ApiOperation({ summary: 'найти юзера по id' })
+  @ApiResponse({ status: 200, type: User })
+  @Roles('USER')
+  @UseGuards(RoleGuard)
+  @ApiParam({ name: 'id', required: true, type: Number })
+  @Get('/:id')
+  getById(@Param('id') id) {
+    return this.userService.findById(id);
+  }
+
   @ApiOperation({ summary: 'дать роль юзеру' })
   @ApiResponse({ status: 200 })
-  @Roles('ADMIN')
+  @Roles('USER')
   @UseGuards(RoleGuard)
   @Post('/role')
   addRole(@Body() dto: AddRoleDto) {

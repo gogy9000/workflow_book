@@ -8,6 +8,8 @@ async function bootstrap() {
   const PORT = process.env.PORT || 8000;
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api');
+
   const config = new DocumentBuilder()
     .setTitle('workflow book')
     .setDescription('REST API docs')
@@ -30,7 +32,7 @@ async function bootstrap() {
   SwaggerModule.setup('/api/docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
+  app.enableCors({ origin: true, credentials: true });
   await app.listen(PORT, () => {
     console.log(`server started on port ${PORT}`);
   });

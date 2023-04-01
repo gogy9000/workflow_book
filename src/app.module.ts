@@ -41,6 +41,8 @@ import { ReportsUsers } from './reports/reports.users.model';
       database: process.env.POSTGRES_DB,
       models: [User, Role, UserRoles, TaskUser, Task, Report, ReportsUsers],
       autoLoadModels: true,
+      synchronize: true,
+      sync: { force: false, alter: true },
     }),
     UsersModule,
     RolesModule,

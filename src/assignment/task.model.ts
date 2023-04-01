@@ -11,15 +11,18 @@ import {
 import { User } from '../users/user.model';
 import { TaskUser } from './task.user.model';
 import { Report } from '../reports/report.model';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface TaskCreation {
   title: string;
   location: string;
   description: string;
   userList: User[];
+  authorId: number;
 }
 @Table({ tableName: 'tasks' })
 export class Task extends Model<Task, TaskCreation> {
+  @ApiProperty({ type: Number, example: 'id задания' })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -28,30 +31,60 @@ export class Task extends Model<Task, TaskCreation> {
   })
   id: number;
 
+  @ApiProperty({ type: Number, example: 'название задания' })
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    defaultValue: 'no name',
+    defaultValue: '',
   })
   title: string;
 
+  @ApiProperty({ type: String, example: 'место исполнения' })
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    defaultValue: 'no name',
+    defaultValue: '',
   })
   location: string;
 
+  @ApiProperty({ type: String, example: 'задание' })
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    defaultValue: 'no name',
+    defaultValue: '',
   })
   description: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    defaultValue: 'creation',
+  })
+  phase: 'creation' | 'ready';
+
+  @ApiProperty({ type: () => User, description: 'ответственные за работу' })
   @BelongsToMany(() => User, () => TaskUser)
   userList: User[];
 
+  @ApiProperty({ type: () => Report, description: 'отчет' })
   @HasOne(() => Report)
   report: Report;
+
+  @ApiProperty({ type: () => User, description: 'ответственный за отчет' })
+  @BelongsTo(() => User, { foreignKey: 'reportOfficerId' })
+  reportOfficer: User;
+
+  // @ApiProperty({ type: Number })
+  // @ForeignKey(() => User)
+  // @Column({ type: DataType.INTEGER, allowNull: true, unique: true })
+  // reportOfficerId: number;
+
+  @ApiProperty({ type: () => User })
+  @BelongsTo(() => User, { foreignKey: 'authorId' })
+  author: User;
+
+  // @ApiProperty({ type: Number })
+  // @ForeignKey(() => User,)
+  // @Column({ type: DataType.INTEGER, allowNull: true, unique: true })
+  // authorId: number;
 }

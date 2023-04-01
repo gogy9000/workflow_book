@@ -2,6 +2,7 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
@@ -63,6 +64,21 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @BelongsToMany(() => Role, () => UserRoles)
   roles: Role[];
+
+  @HasMany(() => Task, {
+    as: 'author',
+    foreignKey: 'authorId',
+  })
+  managedTasks: Task[];
+
+  @HasMany(() => Task, {
+    as: 'reportOfficer',
+    foreignKey: 'reportOfficerId',
+  })
+  responsibleTask: Task[];
+
+  @HasMany(() => Report)
+  managedReports: Report[];
 
   @BelongsToMany(() => Task, () => TaskUser)
   tasks: Task[];

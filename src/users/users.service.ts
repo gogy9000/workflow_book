@@ -4,6 +4,7 @@ import {
   HttpStatus,
   Inject,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
@@ -14,6 +15,7 @@ import { BanUserDto } from './dto/ban-user.dto';
 import { Op } from 'sequelize';
 import { UpdateUserDto } from './dto/update.user.dto';
 import { TaskService } from '../assignment/task.service';
+import sequelize from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -54,9 +56,23 @@ export class UsersService {
     try {
       return await this.userRepository.findAll({
         include: { all: true },
+        attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
       });
     } catch (e) {
       throw e;
+    }
+  }
+  async findById(id: number) {
+    try {
+      return await this.userRepository.findByPk(id, {
+        include: { all: true },
+        attributes: {
+          include: [[sequelize.fn('SELECT', sequelize.col('tasks')), 'tasks']],
+          exclude: ['password'],
+        },
+      });
+    } catch (e) {
+      throw new NotFoundException({ error: e });
     }
   }
   async findByIdAndPut(id: number, { tasks, roles, ...rest }: UpdateUserDto) {

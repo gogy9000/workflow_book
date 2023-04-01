@@ -50,11 +50,16 @@ export class AuthService {
   }
   private async validateUser(dto: CreateUserDto) {
     const user = await this.userService.getByEmail(dto.email);
+    if (!user) {
+      throw new UnauthorizedException({ message: 'пользователь не найден' });
+    }
     const passwordEquals = await bcrypt.compare(dto.password, user.password);
     if (passwordEquals) {
       return user;
     } else {
-      throw new UnauthorizedException({ message: 'пользователь не найден' });
+      throw new UnauthorizedException({
+        message: 'пароль либо почта не совпадают',
+      });
     }
   }
 }

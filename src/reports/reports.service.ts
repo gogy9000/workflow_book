@@ -4,6 +4,7 @@ import {
   HttpStatus,
   Inject,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Report } from './report.model';
@@ -31,10 +32,27 @@ export class ReportsService {
     }
   }
 
-  async create({ userList, ...rest }: CreateReportDto) {
+  async findById(id: number) {
+    try {
+      const report = await this.reportRepository.findByPk(id, {
+        include: { all: true },
+      });
+      if (!report) {
+        throw new NotFoundException({ message: 'ты еблан' });
+      }
+      return report;
+    } catch (e) {
+      throw new NotFoundException({ message: e.message });
+    }
+  }
+
+  async create(id: number, { userList, ...rest }: CreateReportDto) {
     try {
       const users = await this.userService.findByIdArr(userList);
-      const report = await this.reportRepository.create(rest);
+      const report = await this.reportRepository.create({
+        ...rest,
+        authorId: id,
+      });
       await report.$set('userList', users);
       return report.reload({ include: { all: true } });
     } catch (e) {
