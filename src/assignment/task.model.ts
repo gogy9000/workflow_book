@@ -3,7 +3,6 @@ import {
   BelongsToMany,
   Column,
   DataType,
-  ForeignKey,
   HasOne,
   Model,
   Table,
@@ -74,17 +73,7 @@ export class Task extends Model<Task, TaskCreation> {
   @BelongsTo(() => User, { foreignKey: 'reportOfficerId' })
   reportOfficer: User;
 
-  // @ApiProperty({ type: Number })
-  // @ForeignKey(() => User)
-  // @Column({ type: DataType.INTEGER, allowNull: true, unique: true })
-  // reportOfficerId: number;
-
   @ApiProperty({ type: () => User })
   @BelongsTo(() => User, { foreignKey: 'authorId' })
   author: User;
-
-  // @ApiProperty({ type: Number })
-  // @ForeignKey(() => User,)
-  // @Column({ type: DataType.INTEGER, allowNull: true, unique: true })
-  // authorId: number;
 }

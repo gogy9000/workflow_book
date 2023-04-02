@@ -24,4 +24,9 @@ export class CreateTaskDto {
   @IsNumber({}, { each: true })
   @IsOptional()
   userList: number[];
+
+  @ApiProperty({ example: 45, description: 'id ответственного за выполнение' })
+  @IsNumber()
+  @IsOptional()
+  reportOfficerId: number;
 }

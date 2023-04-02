@@ -39,7 +39,7 @@ export class Report extends Model<Report, ReportCreation> {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    defaultValue: 'no name',
+    defaultValue: '',
   })
   title: string;
 
@@ -51,7 +51,7 @@ export class Report extends Model<Report, ReportCreation> {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    defaultValue: 'no name',
+    defaultValue: '',
   })
   location: string;
 
@@ -63,7 +63,7 @@ export class Report extends Model<Report, ReportCreation> {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    defaultValue: 'no name',
+    defaultValue: '',
   })
   description: string;
 
