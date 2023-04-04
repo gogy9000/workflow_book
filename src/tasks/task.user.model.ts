@@ -5,8 +5,6 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '../roles/role.model';
 import { User } from '../users/user.model';
 import { Task } from './task.model';
 

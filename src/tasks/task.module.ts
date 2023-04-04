@@ -7,7 +7,6 @@ import { Task } from './task.model';
 import { TaskUser } from './task.user.model';
 import { AuthModule } from '../auth/auth.module';
 import { UsersModule } from '../users/users.module';
-import { UsersService } from '../users/users.service';
 import { Role } from '../roles/role.model';
 import { UserRoles } from '../roles/user.roles.model';
 import { Report } from '../reports/report.model';
