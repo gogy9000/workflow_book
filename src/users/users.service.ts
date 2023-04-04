@@ -14,7 +14,7 @@ import { AddRoleDto } from './dto/add-role.dto';
 import { BanUserDto } from './dto/ban-user.dto';
 import { Op } from 'sequelize';
 import { UpdateUserDto } from './dto/update.user.dto';
-import { TaskService } from '../assignment/task.service';
+import { TaskService } from '../tasks/task.service';
 import sequelize from 'sequelize';
 
 @Injectable()

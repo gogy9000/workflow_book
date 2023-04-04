@@ -9,7 +9,7 @@ import {
 } from 'sequelize-typescript';
 import { User } from '../users/user.model';
 import { ReportsUsers } from './reports.users.model';
-import { Task } from '../assignment/task.model';
+import { Task } from '../tasks/task.model';
 import { ApiProperty } from '@nestjs/swagger';
 
 interface ReportCreation {

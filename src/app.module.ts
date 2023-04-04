@@ -7,15 +7,15 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/role.model';
 import { UserRoles } from './roles/user.roles.model';
 import { AuthModule } from './auth/auth.module';
-import { PostsModule } from './posts/posts.module';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TaskModule } from './assignment/task.module';
-import { TaskUser } from './assignment/task.user.model';
-import { Task } from './assignment/task.model';
+import { TaskModule } from './tasks/task.module';
+import { TaskUser } from './tasks/task.user.model';
+import { Task } from './tasks/task.model';
 import { ReportsModule } from './reports/reports.module';
 import { Report } from './reports/report.model';
 import { ReportsUsers } from './reports/reports.users.model';
+import { JobOrderModule } from './job-order/job-order.module';
 
 @Module({
   controllers: [],
@@ -50,6 +50,7 @@ import { ReportsUsers } from './reports/reports.users.model';
     // PostsModule,
     TaskModule,
     ReportsModule,
+    JobOrderModule,
   ],
 })
 export class AppModule {}

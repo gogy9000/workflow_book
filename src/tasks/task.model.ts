@@ -3,6 +3,7 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  HasMany,
   HasOne,
   Model,
   Table,
@@ -76,4 +77,10 @@ export class Task extends Model<Task, TaskCreation> {
   @ApiProperty({ type: () => User })
   @BelongsTo(() => User, { foreignKey: 'authorId' })
   author: User;
+
+  @HasMany(() => Task, { foreignKey: 'overTaskId' })
+  subTasks: Task[];
+
+  @BelongsTo(() => Task, { foreignKey: 'overTaskId' })
+  overTask: Task;
 }

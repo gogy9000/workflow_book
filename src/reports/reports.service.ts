@@ -10,8 +10,6 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Report } from './report.model';
 import { CreateReportDto } from './dto/create.report.dto';
 import { UsersService } from '../users/users.service';
-import { Task } from '../assignment/task.model';
-import { CreateTaskDto } from '../assignment/dto/create.task.dto';
 import { Op } from 'sequelize';
 
 @Injectable()

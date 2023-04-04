@@ -1,5 +1,3 @@
-import { Role } from '../../roles/role.model';
-import { Task } from '../../assignment/task.model';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,

@@ -9,8 +9,8 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../roles/role.model';
 import { UserRoles } from '../roles/user.roles.model';
-import { Task } from '../assignment/task.model';
-import { TaskUser } from '../assignment/task.user.model';
+import { Task } from '../tasks/task.model';
+import { TaskUser } from '../tasks/task.user.model';
 import { ReportsUsers } from '../reports/reports.users.model';
 import { Report } from '../reports/report.model';
 
